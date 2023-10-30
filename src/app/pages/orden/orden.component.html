@@ -10,8 +10,13 @@
 
 <mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="idOrden">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> IdOrden </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.idOrden}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="numOrden">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> NumOrden </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.numOrden}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="cliente">

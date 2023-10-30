@@ -165,15 +165,24 @@ export class OrdenEdicionComponent implements OnInit {
   agregar() {
 
     if (this.productoSeleccionado != null && this.cantidad != null) {
-      let det = new OrdenDetalle();
-      det.producto = this.form.value['producto']; //this.productoSeleccionado;
-      det.cantidad = this.cantidad;
-      det.precio = this.precio;
-      this.detalleOrden.push(det);
-      this.calculate();
-      this.productoSeleccionado = null; 
-      this.cantidad = 0;
-      this.precio = 0;
+      var prod = this.detalleOrden.find(i => i.producto === this.productoSeleccionado);
+
+      if(prod == null) {
+        let det = new OrdenDetalle();
+        det.producto = this.form.value['producto']; //this.productoSeleccionado;
+        det.cantidad = this.cantidad;
+        det.precio = this.precio;
+        this.detalleOrden.push(det);
+        this.calculate();
+        this.productoSeleccionado = null; 
+        this.cantidad = 0;
+        this.precio = 0;
+        this.myControlProducto.reset();
+        this.productosFiltrados = this.myControlProducto.valueChanges.pipe(map(val => this.filtrarProductos(val)));
+      } else {
+        this.mensaje = `Este producto ya fue agregado`;
+        this.ordenService.setMensajeCambio(this.mensaje);
+       }
   
     } else {
       this.mensaje = `Debe agregar los datos del producto`;

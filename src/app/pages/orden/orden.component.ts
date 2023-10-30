@@ -22,7 +22,7 @@ import { ClienteService } from '../../_service/cliente.service';
 export class OrdenComponent implements OnInit {
 
   cantidad: number = 0;
-  displayedColumns = ['idOrden', 'cliente', 'fecha', 'monto', 'acciones'];
+  displayedColumns = ['idOrden','numOrden', 'cliente', 'fecha', 'monto', 'acciones'];
   dataSource: MatTableDataSource<Orden>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

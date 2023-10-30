@@ -20,12 +20,12 @@
     </mat-autocomplete>
 
     <mat-form-field>
-        <input matInput placeholder="NumOrden" formControlName="numOrden">
+        <input matInput placeholder="NumOrden" formControlName="numOrden" readonly>
     </mat-form-field>
    
     <mat-form-field>
         <input matInput [matDatepicker]="picker" placeholder="Escoge una fecha" [max]="maxFecha"
-            [(ngModel)]="fechaSeleccionada" (dateChange)="cambieFecha($event)">
+            [(ngModel)]="fechaSeleccionada" (dateChange)="cambieFecha($event)" formControlName="fecha">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -50,6 +50,7 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
+
 
    <mat-form-field>
         <input matInput placeholder="Cantidad" [(ngModel)]="cantidad" formControlName="cantidad">
@@ -89,7 +90,7 @@
         <mat-icon>done</mat-icon>
         <span>Aceptar</span>
     </button>
-    <button mat-raised-button color="accent" routerLink='/cliente' type="button">
+    <button mat-raised-button color="accent" routerLink='/orden' type="button">
         <mat-icon>close</mat-icon>
         <span>Cancelar</span>
     </button>
