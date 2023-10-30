@@ -1,0 +1,97 @@
+<mat-toolbar>Orden de Compra</mat-toolbar>
+
+<form class="example-container" [formGroup]="form" (ngSubmit)="operar()" #consultaForm="ngForm">
+
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID" required formControlName="idOrden">
+        </mat-form-field>
+    </div>
+    
+    <mat-form-field>
+        <input type="text" placeholder="Cliente" matInput [matAutocomplete]="autoCliente"
+            [formControl]="myControlCliente" formControlName="cliente">
+    </mat-form-field>
+    <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="mostrarCliente" 
+        (optionSelected)="seleccionarCliente($event)">
+        <mat-option *ngFor="let p of clientesFiltrados | async" [value]="p">
+            {{ p.nombres }} {{p.apellidos}}
+        </mat-option>
+    </mat-autocomplete>
+
+    <mat-form-field>
+        <input matInput placeholder="NumOrden" formControlName="numOrden">
+    </mat-form-field>
+   
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Escoge una fecha" [max]="maxFecha"
+            [(ngModel)]="fechaSeleccionada" (dateChange)="cambieFecha($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Descripción" formControlName="descripcion"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Monto Total" [(ngModel)]="monto" formControlName="monto" readonly></textarea>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+        <input type="text" placeholder="Producto" matInput [matAutocomplete]="autoProducto" [formControl]="myControlProducto"
+            formControlName="producto">
+        <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="mostrarProducto" 
+        (optionSelected)="seleccionarProducto($event)">
+            <mat-option *ngFor="let m of productosFiltrados | async" [value]="m">
+                {{ m.nombre }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+   <mat-form-field>
+        <input matInput placeholder="Cantidad" [(ngModel)]="cantidad" formControlName="cantidad">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Precio" [(ngModel)]="precio" formControlName="precio" readonly>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="button" (click)="agregar()">Agregar Detalle</button>
+
+    <mat-expansion-panel *ngFor="let d of detalleOrden; let i=index">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{d.producto.nombre}}
+            </mat-panel-title>
+            <mat-panel-description>
+                Ver Detalle
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+            <input matInput placeholder="Cantidad" value="{{d.cantidad}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Precio" value="{{d.precio}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Total" value="{{d.cantidad*d.precio}}">
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="warn" type="button" (click)="removerProducto(i)">Remover</button>
+
+    </mat-expansion-panel>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="estadoBotonRegistrar()">
+        <mat-icon>done</mat-icon>
+        <span>Aceptar</span>
+    </button>
+    <button mat-raised-button color="accent" routerLink='/cliente' type="button">
+        <mat-icon>close</mat-icon>
+        <span>Cancelar</span>
+    </button>
+
+</form>
